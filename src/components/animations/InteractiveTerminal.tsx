@@ -210,7 +210,7 @@ export function InteractiveTerminal() {
           }]);
         }
       })
-      .catch((error) => {
+      .catch(() => {
         setHistory(prev => [...prev, {
           id: Date.now().toString() + '-error',
           type: 'error',
