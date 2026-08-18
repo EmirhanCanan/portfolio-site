@@ -86,11 +86,26 @@ export function Projects() {
                   {t.projects.gddClose || 'Close'}
                 </button>
               </div>
-              <iframe 
-                src="/YUCA-GDD.pdf" 
-                className="w-full flex-grow border-none bg-white"
-                title="YUCA GDD"
-              />
+              <div className="w-full flex-grow border-none bg-slate-100 flex items-center justify-center p-8">
+                <div className="text-center max-w-2xl bg-white p-12 border-4 border-black rounded-xl shadow-[8px_8px_0_0_rgba(0,0,0,1)]">
+                  <div className="text-7xl mb-6">🚧</div>
+                  <h2 className="font-display text-4xl text-black uppercase tracking-wider mb-4">Coming Soon</h2>
+                  <p className="text-slate-600 font-sans text-xl">
+                    Yakında buraya oyunun görselleri ve detayları eklenecek.
+                  </p>
+                  
+                  {/* LATER: Gorseli eklemek icin asagidaki kodu kullanabilirsiniz */}
+                  {/* 
+                  <div className="mt-8">
+                    <img 
+                      src="/oyun-resmi.png" 
+                      alt="YUCA Preview" 
+                      className="w-full h-auto rounded-lg border-4 border-black" 
+                    />
+                  </div>
+                  */}
+                </div>
+              </div>
             </motion.div>
           </motion.div>
         )}
