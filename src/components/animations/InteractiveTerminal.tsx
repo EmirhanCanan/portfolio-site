@@ -151,7 +151,7 @@ export function InteractiveTerminal() {
     }
 
     if (inputMode === 'awaiting_message') {
-      const accessKey = import.meta.env.VITE_WEB3FORMS_KEY;
+      const accessKey = "4c695879-7573-4800-92e9-46c3b84b7784";
 
       if (!accessKey) {
         setHistory(prev => [
