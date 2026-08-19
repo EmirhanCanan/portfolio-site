@@ -8,10 +8,10 @@ interface SectionProps {
 
 export function Section({ id, title, children }: SectionProps) {
   return (
-    <section id={id} className="py-24 relative">
-      <div className="container mx-auto px-6 max-w-5xl">
+    <section id={id} className="py-16 md:py-24 relative">
+      <div className="container mx-auto px-4 sm:px-6 max-w-5xl">
         {title && (
-          <div className="mb-12 inline-block">
+          <div className="mb-8 md:mb-12 inline-block">
             <h2 className="text-4xl md:text-5xl font-display text-[var(--color-toon-text)] uppercase tracking-wider relative z-10">
               {title}
             </h2>

@@ -78,7 +78,8 @@ export const translations = {
           role: 'Oyun Geliştirme Stajyeri',
           place: 'OXS Games',
           placeUrl: 'https://oxs.games/',
-          period: 'Haz 2026 – Ağu 2026',
+          period: 'Haz 2026 – Devam Ediyor',
+          isCurrent: true,
           points: [
             'Oyun geliştirme stüdyosunun üretim süreçlerine katılım',
             'Profesyonel projelerde aktif rol',
@@ -299,7 +300,8 @@ export const translations = {
           role: 'Game Development Intern',
           place: 'OXS Games',
           placeUrl: 'https://oxs.games/',
-          period: 'Jun 2026 – Aug 2026',
+          period: 'Jun 2026 – Present',
+          isCurrent: true,
           points: [
             'Joined studio production workflows',
             'Active role on professional projects',
