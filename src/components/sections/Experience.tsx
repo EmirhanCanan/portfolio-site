@@ -31,11 +31,11 @@ export function Experience() {
                     </a>
                   </div>
                   <span className={`shrink-0 font-mono font-bold px-3 py-1 rounded border-2 flex items-center gap-2 ${
-                    item.isCurrent 
+                    (item as any).isCurrent 
                       ? 'bg-green-500/20 text-green-400 border-green-500 shadow-[2px_2px_0_0_rgba(34,197,94,0.5)]' 
                       : 'bg-[var(--color-toon-blue)]/20 text-[var(--color-toon-blue)] border-[var(--color-toon-blue)] shadow-[2px_2px_0_0_rgba(59,130,246,0.5)]'
                   }`}>
-                    {item.isCurrent && (
+                    {(item as any).isCurrent && (
                       <span className="relative flex h-2 w-2">
                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                         <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
