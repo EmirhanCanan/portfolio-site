@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../../i18n/LanguageContext';
 
@@ -14,6 +14,7 @@ export function MiniCharacter() {
   const [randomCmd, setRandomCmd] = useState('');
   const [responseMsg, setResponseMsg] = useState('');
   const { lang } = useLanguage();
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const trContent = {
     click1: "Ne var ?",
@@ -43,6 +44,27 @@ export function MiniCharacter() {
 
   // The index of "Beğenmedin mi? / Didn't like it?" is 1
   const BANNED_FIRST_RESPONSE_INDEX = 1;
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent | TouchEvent) => {
+      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+        if (isOpen) {
+          setIsOpen(false);
+          // Don't reset click count so it remembers where it was, or reset if desired. 
+          // We'll just reset it so the interaction restarts if they click him again.
+          setClickCount(0); 
+        }
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('touchstart', handleClickOutside);
+    
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
+    };
+  }, [isOpen]);
 
   useEffect(() => {
     if (clickCount >= 3) {
@@ -87,7 +109,7 @@ export function MiniCharacter() {
   };
 
   return (
-    <div className="absolute bottom-0 right-0 md:right-4 z-[100] flex items-end pointer-events-none w-48 h-48 sm:w-64 sm:h-64">
+    <div ref={containerRef} className="absolute bottom-0 right-0 md:right-4 z-[100] flex items-end pointer-events-none w-48 h-48 sm:w-64 sm:h-64">
       <AnimatePresence>
         {isOpen && (
           <motion.div
