@@ -99,7 +99,7 @@ export const translations = {
           role: 'Riot Games Kampüs Elçisi',
           place: 'Riot Games',
           placeUrl: 'https://www.riotgames.com/tr',
-          period: '2024 – 2026 · 2 yıllık görev',
+          period: '2024 – 2026',
           points: [
             'Topluluk yönetimi ve kampüs temsili',
             'Etkinlik ve turnuva operasyonlarına katkı',
@@ -321,7 +321,7 @@ export const translations = {
           role: 'Riot Games Campus Ambassador',
           place: 'Riot Games',
           placeUrl: 'https://www.riotgames.com/tr',
-          period: '2024 – 2026 · 2-year term',
+          period: '2024 – 2026',
           points: [
             'Campus representation and community work',
             'Supported event and tournament operations',
