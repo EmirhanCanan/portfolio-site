@@ -148,7 +148,7 @@ export const translations = {
     },
     riot: {
       title: 'Elçilik ve Etkinlikler',
-      body: '',
+      body: 'Riot Games Kampüs Elçisi olarak üniversitemde oyun ekosistemini temsil ediyor, topluluk turnuvaları düzenliyor ve oyuncuları bir araya getiriyorum. Ayrıca Espor etkinliklerinde de görev almaktayım.',
       close: 'Kapat',
       events: [
         {
@@ -371,7 +371,7 @@ export const translations = {
     },
     riot: {
       title: 'Embassy & Events',
-      body: '',
+      body: 'As a Riot Games Campus Ambassador, I represent the gaming ecosystem at my university, organize community tournaments, and bring players together. I also take an active role in Esports events.',
       close: 'Close',
       events: [
         {

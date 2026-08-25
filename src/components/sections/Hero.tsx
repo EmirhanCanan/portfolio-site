@@ -1,6 +1,6 @@
 import { useLanguage } from '../../i18n/LanguageContext'
 import { motion } from 'framer-motion'
-import { ArrowRight, Code, DownloadSimple } from '@phosphor-icons/react'
+import { ArrowRight, Code } from '@phosphor-icons/react'
 import { TetrisGame } from '../game/TetrisGame'
 import { EasterEggName } from '../animations/EasterEggName'
 
@@ -46,7 +46,7 @@ export function Hero() {
                 onClick={() => window.dispatchEvent(new CustomEvent('open-cv-modal'))}
                 className="toon-button bg-transparent border-2 border-[var(--color-toon-blue)] text-slate-200 hover:bg-[var(--color-toon-blue)] hover:text-white transition-colors flex items-center gap-2 w-max"
               >
-                {t.hero.ctaResume} <DownloadSimple weight="bold" />
+                {t.hero.ctaResume}
               </button>
             </div>
           </div>
