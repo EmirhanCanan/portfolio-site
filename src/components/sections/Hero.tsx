@@ -42,13 +42,12 @@ export function Hero() {
               </a>
             </div>
             <div className="flex">
-              <a 
-                href={t.hero.resumeUrl} 
-                download
+              <button 
+                onClick={() => window.dispatchEvent(new CustomEvent('open-cv-modal'))}
                 className="toon-button bg-transparent border-2 border-[var(--color-toon-blue)] text-slate-200 hover:bg-[var(--color-toon-blue)] hover:text-white transition-colors flex items-center gap-2 w-max"
               >
                 {t.hero.ctaResume} <DownloadSimple weight="bold" />
-              </a>
+              </button>
             </div>
           </div>
         </motion.div>

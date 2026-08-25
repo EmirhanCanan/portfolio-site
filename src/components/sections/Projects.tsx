@@ -7,7 +7,7 @@ import { TiltCard } from '../animations/TiltCard'
 
 export function Projects() {
   const { t } = useLanguage()
-  const [isPdfOpen, setIsPdfOpen] = useState(false)
+  const [selectedProject, setSelectedProject] = useState<any>(null)
 
   return (
     <Section id="projects" title={t.projects.title}>
@@ -42,18 +42,12 @@ export function Projects() {
               </p>
               
               <div className="mt-auto">
-                {item.action === 'gdd' ? (
-                  <button 
-                    onClick={() => setIsPdfOpen(true)}
-                    className="toon-button w-full sm:w-auto inline-flex items-center gap-2"
-                  >
-                    {t.projects.gddOpen} <ArrowSquareOut weight="bold" />
-                  </button>
-                ) : 'actionUrl' in item && item.actionUrl ? (
-                  <a href={item.actionUrl} target="_blank" rel="noreferrer" className="toon-button w-full sm:w-auto">
-                    İncele <ArrowSquareOut weight="bold" />
-                  </a>
-                ) : null}
+                <button 
+                  onClick={() => setSelectedProject(item)}
+                  className="toon-button w-full sm:w-auto inline-flex items-center gap-2 justify-center"
+                >
+                  {t.projects.actionReview || 'İncele'} <ArrowSquareOut weight="bold" />
+                </button>
               </div>
             </div>
             </div>
@@ -62,13 +56,13 @@ export function Projects() {
       </div>
 
       <AnimatePresence>
-        {isPdfOpen && (
+        {selectedProject && (
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-[99999] bg-black/80 flex flex-col items-center justify-center p-4 backdrop-blur-sm"
-            onClick={() => setIsPdfOpen(false)}
+            onClick={() => setSelectedProject(null)}
           >
             <motion.div 
               initial={{ scale: 0.9, y: 20 }}
@@ -78,9 +72,9 @@ export function Projects() {
               onClick={e => e.stopPropagation()}
             >
               <div className="p-4 bg-[var(--color-toon-orange)] border-b-4 border-black flex justify-between items-center">
-                <h3 className="font-display text-white text-xl uppercase tracking-wider">{t.projects.gddTitle || 'YUCA - Game Design Document'}</h3>
+                <h3 className="font-display text-white text-xl uppercase tracking-wider">{selectedProject.name} - Details</h3>
                 <button 
-                  onClick={() => setIsPdfOpen(false)}
+                  onClick={() => setSelectedProject(null)}
                   className="toon-button bg-white text-black hover:bg-slate-200 px-4 py-2 text-sm shadow-none"
                 >
                   {t.projects.gddClose || 'Close'}
@@ -91,19 +85,8 @@ export function Projects() {
                   <div className="text-7xl mb-6">🚧</div>
                   <h2 className="font-display text-4xl text-black uppercase tracking-wider mb-4">Coming Soon</h2>
                   <p className="text-slate-600 font-sans text-xl">
-                    Yakında buraya oyunun görselleri ve detayları eklenecek.
+                    Yakında buraya projenin oyun içi görselleri ve detayları eklenecek.
                   </p>
-                  
-                  {/* LATER: Gorseli eklemek icin asagidaki kodu kullanabilirsiniz */}
-                  {/* 
-                  <div className="mt-8">
-                    <img 
-                      src="/oyun-resmi.png" 
-                      alt="YUCA Preview" 
-                      className="w-full h-auto rounded-lg border-4 border-black" 
-                    />
-                  </div>
-                  */}
                 </div>
               </div>
             </motion.div>

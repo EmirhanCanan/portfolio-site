@@ -27,7 +27,7 @@ export const translations = {
       lineSecondary: 'E-spor ekosisteminde organizasyon',
       ctaWork: 'Projelere bak',
       ctaContact: 'İletişim',
-      ctaResume: 'CV İndir',
+      ctaResume: 'CV\'yi Aç',
       resumeUrl: '/cv/Emirhan_Canan_CV_TR.pdf',
       lapis: 'Lapis Interactive',
       hint: 'Not: Kutuları hareket ettirmeyi dene!',
@@ -113,6 +113,7 @@ export const translations = {
       body: 'Oyun ve mobil üretimlerden seçili işler.',
       gddOpen: 'GDD’yi aç',
       gddClose: 'Kapat',
+      actionReview: 'İncele',
       gddTitle: 'YUCA — Game Design Document',
       gddHint: 'Unreal Engine · atmosferik korku / gerilim',
       items: [
@@ -147,7 +148,7 @@ export const translations = {
     },
     riot: {
       title: 'Elçilik ve Etkinlikler',
-      body: 'Paketlere tıklayarak her etkinliğin detayını aç.',
+      body: '',
       close: 'Kapat',
       events: [
         {
@@ -249,7 +250,7 @@ export const translations = {
       lineSecondary: 'organization in the esports ecosystem',
       ctaWork: 'View projects',
       ctaContact: 'Contact',
-      ctaResume: 'Download CV',
+      ctaResume: 'Open CV',
       resumeUrl: '/cv/Emirhan_Canan_CV_EN.pdf',
       lapis: 'Lapis Interactive',
       hint: 'P.S. Try moving the boxes!',
@@ -335,6 +336,7 @@ export const translations = {
       body: 'Selected game and mobile work.',
       gddOpen: 'Open GDD',
       gddClose: 'Close',
+      actionReview: 'Inspect',
       gddTitle: 'YUCA — Game Design Document',
       gddHint: 'Unreal Engine · atmospheric horror / tension',
       items: [
@@ -369,7 +371,7 @@ export const translations = {
     },
     riot: {
       title: 'Embassy & Events',
-      body: 'Tap a pack to open the event details.',
+      body: '',
       close: 'Close',
       events: [
         {

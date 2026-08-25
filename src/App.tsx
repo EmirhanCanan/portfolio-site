@@ -12,6 +12,7 @@ import { RiotEvents } from './components/sections/RiotEvents'
 import { Contact } from './components/sections/Contact'
 import ClickSpark from './components/animations/ClickSpark'
 import { MiniCharacter } from './components/animations/MiniCharacter'
+import { CVModal } from './components/layout/CVModal'
 
 import './styles/components.css'
 
@@ -52,6 +53,7 @@ function AppContent() {
         <Contact />
       </main>
       <MiniCharacter />
+      <CVModal />
     </>
   )
 }
