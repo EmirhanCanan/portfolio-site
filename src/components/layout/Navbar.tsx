@@ -15,8 +15,8 @@ export function Navbar() {
           <ul className="hidden md:flex items-center gap-8 font-sans font-bold text-lg uppercase tracking-wider">
             <li><a href="#about" className="hover:text-[var(--color-toon-blue)] hover:-translate-y-1 transition-all inline-block">{t.nav.about}</a></li>
             <li><a href="#skills" className="hover:text-[var(--color-toon-blue)] hover:-translate-y-1 transition-all inline-block">{t.nav.skills}</a></li>
-            <li><a href="#projects" className="hover:text-[var(--color-toon-blue)] hover:-translate-y-1 transition-all inline-block">{t.nav.projects}</a></li>
-            <li><a href="#experience" className="hover:text-[var(--color-toon-blue)] hover:-translate-y-1 transition-all inline-block">{t.nav.experience}</a></li>
+<li><a href="#experience" className="hover:text-[var(--color-toon-blue)] hover:-translate-y-1 transition-all inline-block">{t.nav.experience}</a></li>
+<li><a href="#projects" className="hover:text-[var(--color-toon-blue)] hover:-translate-y-1 transition-all inline-block">{t.nav.projects}</a></li>
             <li><a href="#contact" className="hover:text-[var(--color-toon-blue)] hover:-translate-y-1 transition-all inline-block">{t.nav.contact}</a></li>
           </ul>
           
