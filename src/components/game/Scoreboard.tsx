@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { Trophy, CaretDown, CaretUp } from '@phosphor-icons/react';
+import { useState, useEffect, useCallback } from 'react';
+import { Trophy, CaretDown, CaretUp, SpinnerGap } from '@phosphor-icons/react';
 
 interface Score {
   id: string;
@@ -30,21 +30,54 @@ export function Scoreboard({ currentScore, isGameOver, onSave }: ScoreboardProps
   const [scores, setScores] = useState<Score[]>([]);
   const [playerName, setPlayerName] = useState('');
   const [isError, setIsError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    const saved = localStorage.getItem('tetris_scores');
-    if (saved) {
-      setScores(JSON.parse(saved));
+  const fetchScores = useCallback(async () => {
+    setLoading(true);
+    try {
+      const response = await fetch('/api/scores');
+      const data = await response.json();
+      
+      let newScores: Score[] = [];
+      const entries = data?.dreamlo?.leaderboard?.entry;
+      
+      if (entries) {
+        if (Array.isArray(entries)) {
+          newScores = entries.map((e: any, idx: number) => ({
+            id: `dreamlo-${idx}`,
+            name: e.name.replace(/_/g, ' '),
+            score: parseInt(e.score),
+            date: e.date
+          }));
+        } else {
+          newScores = [{
+            id: 'dreamlo-0',
+            name: entries.name.replace(/_/g, ' '),
+            score: parseInt(entries.score),
+            date: entries.date
+          }];
+        }
+      }
+      setScores(newScores);
+    } catch (err) {
+      console.error("Failed to fetch scores", err);
+    } finally {
+      setLoading(false);
     }
   }, []);
 
   useEffect(() => {
+    fetchScores();
+  }, [fetchScores]);
+
+  useEffect(() => {
     if (isGameOver) {
       setIsOpen(true);
+      fetchScores();
     }
-  }, [isGameOver]);
+  }, [isGameOver, fetchScores]);
 
-  const handleSaveScore = (e: React.FormEvent) => {
+  const handleSaveScore = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!playerName.trim() || currentScore === 0) return;
 
@@ -54,21 +87,24 @@ export function Scoreboard({ currentScore, isGameOver, onSave }: ScoreboardProps
       return;
     }
 
-    const safeName = playerName.trim();
+    const safeName = playerName.trim().substring(0, 15);
 
-    const newScore: Score = {
-      id: Date.now().toString(),
-      name: safeName.substring(0, 15),
-      score: currentScore,
-      date: new Date().toLocaleDateString(),
-    };
-
-    const updatedScores = [...scores, newScore].sort((a, b) => b.score - a.score).slice(0, 20); // Keep top 20
-    setScores(updatedScores);
-    localStorage.setItem('tetris_scores', JSON.stringify(updatedScores));
-    setPlayerName('');
-    setIsError(false);
-    onSave();
+    setLoading(true);
+    try {
+      await fetch('/api/scores', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: safeName, score: currentScore })
+      });
+      await fetchScores(); // refresh
+      setPlayerName('');
+      setIsError(false);
+      onSave();
+    } catch (err) {
+      console.error("Failed to save score", err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleInputClick = () => {
@@ -82,11 +118,14 @@ export function Scoreboard({ currentScore, isGameOver, onSave }: ScoreboardProps
     <div className="w-full max-w-xl mx-auto mt-4">
       <div 
         className="toon-card bg-slate-900 border-2 border-toon-yellow cursor-pointer p-4 flex justify-between items-center transition-all hover:bg-slate-800"
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => {
+          setIsOpen(!isOpen);
+          if (!isOpen) fetchScores();
+        }}
       >
         <div className="flex items-center gap-3 text-toon-yellow">
           <Trophy weight="fill" className="w-6 h-6" />
-          <h3 className="font-display text-xl uppercase tracking-widest mt-1">LİDERLİK TABLOSU</h3>
+          <h3 className="font-display text-xl uppercase tracking-widest mt-1">GLOBAL LİDERLİK TABLOSU</h3>
         </div>
         <div className="text-slate-400">
           {isOpen ? <CaretUp weight="bold" /> : <CaretDown weight="bold" />}
@@ -107,23 +146,32 @@ export function Scoreboard({ currentScore, isGameOver, onSave }: ScoreboardProps
                   }}
                   onClick={handleInputClick}
                   placeholder="İsmini gir..." 
-                  maxLength={17}
+                  maxLength={15}
                   required
+                  disabled={loading}
                   className={`flex-grow bg-slate-800 border-2 text-white p-2 outline-none rounded font-mono transition-colors ${
                     isError 
                       ? 'border-red-500 bg-red-500/20 text-red-400 animate-pulse' 
                       : 'border-slate-600 focus:border-toon-orange'
-                  }`}
+                  } disabled:opacity-50`}
                 />
-                <button type="submit" className="bg-toon-orange text-white font-bold px-4 py-2 rounded hover:bg-orange-600 transition-colors">
-                  KAYDET
+                <button 
+                  type="submit" 
+                  disabled={loading}
+                  className="bg-toon-orange text-white font-bold px-4 py-2 rounded hover:bg-orange-600 transition-colors disabled:opacity-50 flex items-center justify-center min-w-[100px]"
+                >
+                  {loading ? <SpinnerGap className="animate-spin" weight="bold" /> : "KAYDET"}
                 </button>
               </div>
             </form>
           )}
 
           <div className="space-y-2">
-            {scores.length === 0 ? (
+            {loading && scores.length === 0 ? (
+              <p className="text-slate-500 font-mono text-center py-4 flex items-center justify-center gap-2">
+                <SpinnerGap className="animate-spin" /> Yükleniyor...
+              </p>
+            ) : scores.length === 0 ? (
               <p className="text-slate-500 font-mono text-center py-4">Henüz skor kaydedilmedi.</p>
             ) : (
               <div className="flex flex-col gap-2">
