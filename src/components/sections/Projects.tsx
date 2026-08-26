@@ -2,16 +2,18 @@ import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useLanguage } from '../../i18n/LanguageContext'
 import { Section } from '../layout/Section'
-import { ArrowSquareOut, GameController } from '@phosphor-icons/react'
+import { ArrowSquareOut, GameController, CaretLeft, CaretRight } from '@phosphor-icons/react'
 import { TiltCard } from '../animations/TiltCard'
 
 export function Projects() {
   const { t } = useLanguage()
   const [selectedProject, setSelectedProject] = useState<any>(null)
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
   useEffect(() => {
     if (selectedProject) {
       document.body.style.overflow = 'hidden'
+      setCurrentImageIndex(0)
     } else {
       document.body.style.overflow = 'unset'
     }
@@ -19,6 +21,11 @@ export function Projects() {
       document.body.style.overflow = 'unset'
     }
   }, [selectedProject])
+
+  const durumImages = [1, 2, 3, 4, 5, 6, 7].map(num => `/projects/durum-zamani/${num}.jpg`)
+
+  const nextImage = () => setCurrentImageIndex((prev) => (prev + 1) % durumImages.length)
+  const prevImage = () => setCurrentImageIndex((prev) => (prev - 1 + durumImages.length) % durumImages.length)
 
   return (
     <Section id="projects" title={t.projects.title}>
@@ -79,26 +86,65 @@ export function Projects() {
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
-              data-lenis-prevent="true" className="w-full max-w-5xl h-[90vh] bg-[var(--color-toon-bg)] rounded-xl border-4 border-black flex flex-col overflow-hidden shadow-[8px_8px_0_0_rgba(0,0,0,1)] relative"
+              data-lenis-prevent="true" 
+              className="w-full max-w-6xl h-[90vh] bg-[var(--color-toon-bg)] rounded-xl border-4 border-black flex flex-col overflow-hidden shadow-[8px_8px_0_0_rgba(0,0,0,1)] relative"
               onClick={e => e.stopPropagation()}
             >
-              <div className="p-4 bg-[var(--color-toon-orange)] border-b-4 border-black flex justify-between items-center">
-                <h3 className="font-display text-white text-xl uppercase tracking-wider">{selectedProject.name} - Details</h3>
+              <div className="p-4 bg-[var(--color-toon-orange)] border-b-4 border-black flex justify-between items-center z-10 shrink-0">
+                <h3 className="font-display text-white text-xl uppercase tracking-wider">{selectedProject.name} - {t.projects.actionReview || 'İncele'}</h3>
                 <button 
                   onClick={() => setSelectedProject(null)}
                   className="toon-button bg-white text-black hover:bg-slate-200 px-4 py-2 text-sm shadow-none"
                 >
-                  {t.projects.gddClose || 'Close'}
+                  {t.projects.gddClose || 'Kapat'}
                 </button>
               </div>
-              <div className="w-full flex-grow border-none bg-slate-100 flex items-center justify-center p-8">
-                <div className="text-center max-w-2xl bg-white p-12 border-4 border-black rounded-xl shadow-[8px_8px_0_0_rgba(0,0,0,1)]">
-                  <div className="text-7xl mb-6">🚧</div>
-                  <h2 className="font-display text-4xl text-black uppercase tracking-wider mb-4">Coming Soon</h2>
-                  <p className="text-slate-600 font-sans text-xl">
-                    Yakında buraya projenin oyun içi görselleri ve detayları eklenecek.
-                  </p>
-                </div>
+              
+              <div className="w-full flex-grow bg-slate-900 flex items-center justify-center p-4 md:p-8 overflow-y-auto relative">
+                {selectedProject.id === 'sumakli' ? (
+                  <div className="w-full h-full flex flex-col items-center max-w-5xl mx-auto">
+                    <div className="relative w-full flex-grow flex items-center justify-center rounded-xl border-4 border-black overflow-hidden bg-black shadow-[8px_8px_0_0_rgba(0,0,0,1)]">
+                      <AnimatePresence mode="wait">
+                        <motion.img
+                          key={currentImageIndex}
+                          src={durumImages[currentImageIndex]}
+                          alt={`Dürüm Zamanı In-Game Screenshot ${currentImageIndex + 1}`}
+                          className="absolute inset-0 w-full h-full object-contain"
+                          initial={{ opacity: 0, x: 20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          exit={{ opacity: 0, x: -20 }}
+                          transition={{ duration: 0.2 }}
+                        />
+                      </AnimatePresence>
+                      
+                      <button 
+                        onClick={prevImage}
+                        className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-black p-3 rounded-full border-2 border-black shadow-[4px_4px_0_0_rgba(0,0,0,1)] hover:translate-y-[-50%] hover:scale-110 transition-transform z-10"
+                      >
+                        <CaretLeft weight="bold" className="w-6 h-6" />
+                      </button>
+                      
+                      <button 
+                        onClick={nextImage}
+                        className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-black p-3 rounded-full border-2 border-black shadow-[4px_4px_0_0_rgba(0,0,0,1)] hover:translate-y-[-50%] hover:scale-110 transition-transform z-10"
+                      >
+                        <CaretRight weight="bold" className="w-6 h-6" />
+                      </button>
+
+                      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/50 text-white font-mono px-3 py-1 rounded-full text-sm font-bold border-2 border-black">
+                        {currentImageIndex + 1} / {durumImages.length}
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="text-center max-w-2xl bg-white p-12 border-4 border-black rounded-xl shadow-[8px_8px_0_0_rgba(0,0,0,1)] m-auto">
+                    <div className="text-7xl mb-6">🚧</div>
+                    <h2 className="font-display text-4xl text-black uppercase tracking-wider mb-4">Coming Soon</h2>
+                    <p className="text-slate-600 font-sans text-xl">
+                      Yakında buraya projenin oyun içi görselleri ve detayları eklenecek.
+                    </p>
+                  </div>
+                )}
               </div>
             </motion.div>
           </motion.div>
