@@ -7,15 +7,21 @@ export function EasterEggName() {
 
   useEffect(() => {
     if (clicks === 5) {
-      controls.start({
-        y: window.innerHeight + 100,
-        rotate: Math.random() * 360 - 180,
-        opacity: 0,
-        transition: { duration: 1.5, ease: "easeIn" }
-      }).then(() => {
+      // Trigger fall
+      controls.start(i => ({
+        y: [0, -20, window.innerHeight + 100],
+        rotate: [0, Math.random() * 90 - 45, Math.random() * 360 - 180],
+        opacity: [1, 1, 0],
+        transition: { duration: 1.5, delay: i * 0.05, ease: "easeIn" }
+      })).then(() => {
+        // Reset after fall
         setTimeout(() => {
           setClicks(0);
-          controls.set({ y: 0, rotate: 0, opacity: 1 });
+          controls.set({ y: 0, rotate: 0, opacity: 0 });
+          controls.start({
+            opacity: 1,
+            transition: { duration: 1 }
+          });
         }, 1000);
       });
     }
@@ -27,39 +33,41 @@ export function EasterEggName() {
     }
   };
 
-  const name = "> Emirhan_Canan";
+  const name1 = "Emirhan".split("");
+  const name2 = "Canan".split("");
 
   return (
-    <div className="flex flex-col items-start select-none cursor-pointer" onClick={handleClick}>
-      <motion.h1 
-        animate={controls}
-        className="text-[4rem] md:text-[6.5rem] font-mono text-[var(--color-toon-orange)] tracking-tighter"
-        style={{ textShadow: '4px 4px 0 #000' }}
-      >
-        {name.split("").map((char, index) => (
+    <h1 
+      onClick={handleClick}
+      className="text-6xl md:text-8xl font-display text-white uppercase leading-none drop-shadow-[4px_4px_0_rgba(0,0,0,1)] cursor-pointer select-none"
+    >
+      <div className="inline-block">
+        {name1.map((char, i) => (
           <motion.span
-            key={index}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{
-              duration: 0.1,
-              delay: index * 0.15,
-            }}
+            key={"first-"+i}
+            custom={i}
+            animate={controls}
+            whileHover={{ scale: 1.1, color: "var(--color-toon-orange)" }}
+            className="inline-block transition-colors duration-200"
           >
             {char}
           </motion.span>
         ))}
-        <motion.span
-          animate={{ opacity: [1, 0] }}
-          transition={{
-            duration: 0.8,
-            repeat: Infinity,
-            repeatType: "reverse",
-          }}
-          className="inline-block w-[0.6em] h-[1em] bg-[var(--color-toon-blue)] align-middle ml-2"
-          style={{ boxShadow: '4px 4px 0 #000' }}
-        />
-      </motion.h1>
-    </div>
+      </div>
+      <br />
+      <div className="inline-block text-[var(--color-toon-blue)]">
+        {name2.map((char, i) => (
+          <motion.span
+            key={"last-"+i}
+            custom={i + name1.length}
+            animate={controls}
+            whileHover={{ scale: 1.1, color: "var(--color-toon-orange)" }}
+            className="inline-block transition-colors duration-200"
+          >
+            {char}
+          </motion.span>
+        ))}
+      </div>
+    </h1>
   );
 }
