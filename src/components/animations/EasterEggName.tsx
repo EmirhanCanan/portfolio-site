@@ -15,11 +15,7 @@ export function EasterEggName() {
       }).then(() => {
         setTimeout(() => {
           setClicks(0);
-          controls.set({ y: 0, rotate: 0, opacity: 0 });
-          controls.start({
-            opacity: 1,
-            transition: { duration: 1 }
-          });
+          controls.set({ y: 0, rotate: 0, opacity: 1 });
         }, 1000);
       });
     }
@@ -31,26 +27,38 @@ export function EasterEggName() {
     }
   };
 
-  const shadowBase = "4px 4px 0 rgba(0,0,0,1)";
+  const name = "> Emirhan_Canan";
 
   return (
-    <div className="flex flex-col items-start select-none cursor-pointer group" onClick={handleClick}>
+    <div className="flex flex-col items-start select-none cursor-pointer" onClick={handleClick}>
       <motion.h1 
         animate={controls}
-        className="text-[5rem] md:text-[8rem] font-display uppercase leading-[0.85] text-white cyber-glitch"
-        data-text="Emirhan"
-        style={{ textShadow: shadowBase, WebkitTextStroke: '2px black' }}
+        className="text-[4rem] md:text-[6.5rem] font-mono text-[var(--color-toon-orange)] tracking-tighter"
+        style={{ textShadow: '4px 4px 0 #000' }}
       >
-        Emirhan
-      </motion.h1>
-
-      <motion.h1 
-        animate={controls}
-        className="text-[5rem] md:text-[8rem] font-display uppercase leading-[0.85] text-[var(--color-toon-blue)] cyber-glitch mt-4"
-        data-text="Canan"
-        style={{ textShadow: shadowBase, WebkitTextStroke: '2px black' }}
-      >
-        Canan
+        {name.split("").map((char, index) => (
+          <motion.span
+            key={index}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{
+              duration: 0.1,
+              delay: index * 0.15,
+            }}
+          >
+            {char}
+          </motion.span>
+        ))}
+        <motion.span
+          animate={{ opacity: [1, 0] }}
+          transition={{
+            duration: 0.8,
+            repeat: Infinity,
+            repeatType: "reverse",
+          }}
+          className="inline-block w-[0.6em] h-[1em] bg-[var(--color-toon-blue)] align-middle ml-2"
+          style={{ boxShadow: '4px 4px 0 #000' }}
+        />
       </motion.h1>
     </div>
   );
