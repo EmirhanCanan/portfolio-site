@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useLanguage } from '../../i18n/LanguageContext'
 import { Section } from '../layout/Section'
@@ -8,6 +8,17 @@ import { TiltCard } from '../animations/TiltCard'
 export function Projects() {
   const { t } = useLanguage()
   const [selectedProject, setSelectedProject] = useState<any>(null)
+
+  useEffect(() => {
+    if (selectedProject) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'unset'
+    }
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [selectedProject])
 
   return (
     <Section id="projects" title={t.projects.title}>
@@ -68,7 +79,7 @@ export function Projects() {
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
-              className="w-full max-w-5xl h-[90vh] bg-[var(--color-toon-bg)] rounded-xl border-4 border-black flex flex-col overflow-hidden shadow-[8px_8px_0_0_rgba(0,0,0,1)] relative"
+              data-lenis-prevent="true" className="w-full max-w-5xl h-[90vh] bg-[var(--color-toon-bg)] rounded-xl border-4 border-black flex flex-col overflow-hidden shadow-[8px_8px_0_0_rgba(0,0,0,1)] relative"
               onClick={e => e.stopPropagation()}
             >
               <div className="p-4 bg-[var(--color-toon-orange)] border-b-4 border-black flex justify-between items-center">

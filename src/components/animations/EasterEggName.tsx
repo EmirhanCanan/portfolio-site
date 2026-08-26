@@ -39,15 +39,21 @@ export function EasterEggName() {
   return (
     <h1 
       onClick={handleClick}
-      className="text-6xl md:text-8xl font-display text-white uppercase leading-none drop-shadow-[4px_4px_0_rgba(0,0,0,1)] cursor-pointer select-none"
+      className="text-6xl md:text-[7rem] font-display uppercase leading-[0.9] cursor-pointer select-none"
+      style={{ textShadow: '6px 6px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000' }}
     >
-      <div className="inline-block">
+      <div className="inline-block text-white">
         {name1.map((char, i) => (
           <motion.span
             key={"first-"+i}
             custom={i}
             animate={controls}
-            whileHover={{ scale: 1.1, color: "var(--color-toon-orange)" }}
+            initial={{ y: 0 }}
+            whileInView={{
+              y: [-2, 2, -2],
+              transition: { duration: 2, repeat: Infinity, ease: "easeInOut", delay: i * 0.1 }
+            }}
+            whileHover={{ scale: 1.25, y: -10, rotate: Math.random() > 0.5 ? 10 : -10, color: "#f97316" }}
             className="inline-block transition-colors duration-200"
           >
             {char}
@@ -61,7 +67,12 @@ export function EasterEggName() {
             key={"last-"+i}
             custom={i + name1.length}
             animate={controls}
-            whileHover={{ scale: 1.1, color: "var(--color-toon-orange)" }}
+            initial={{ y: 0 }}
+            whileInView={{
+              y: [-2, 2, -2],
+              transition: { duration: 2, repeat: Infinity, ease: "easeInOut", delay: (i + name1.length) * 0.1 }
+            }}
+            whileHover={{ scale: 1.25, y: -10, rotate: Math.random() > 0.5 ? 10 : -10, color: "#3b82f6" }}
             className="inline-block transition-colors duration-200"
           >
             {char}
